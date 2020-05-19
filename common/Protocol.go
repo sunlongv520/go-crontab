@@ -12,6 +12,7 @@ import (
 // 定时任务
 type Job struct {
 	Name string `json:"name"`	//  任务名
+	JobEtcdName string `json:"job_etcd_name"`	//  任务名
 	Command string	`json:"command"` // shell命令
 	CronExpr string	`json:"cronExpr"`	// cron表达式
 }
@@ -85,6 +86,7 @@ type SortLogByStartTime struct {
 type CronJobs struct {
 	//Id primitive.ObjectID `bson:"_id"`
 	JobName string `bson:"job_name"` // 任务名字
+	JobEtcdName string `bson:"job_etcd_name"` // etcd任务名字
 	EtcdKey string `bson:"etcd_key"` // etcd key
 	Node string `bson:"node"` // 所属节点
 	Group int64 `bson:"group"` // 所属分组

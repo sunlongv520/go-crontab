@@ -11,6 +11,7 @@ require (
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/google/uuid v1.1.1 // indirect
 	github.com/gorhill/cronexpr v0.0.0-20180427100037-88b0669f7d75
+	github.com/ichunt2019/logger v1.0.5
 	github.com/mongodb/mongo-go-driver v1.2.1
 	github.com/xdg/scram v0.0.0-20180814205039-7eeb5667e42c // indirect
 	github.com/xdg/stringprep v1.0.0 // indirect

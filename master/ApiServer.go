@@ -66,7 +66,7 @@ ERR:
 func handleJobDelete(resp http.ResponseWriter, req *http.Request) {
 	var (
 		err error	// interface{}
-		job_name string
+		job_etcd_name string
 		node string
 		oldJob *common.Job
 		bytes []byte
@@ -78,11 +78,11 @@ func handleJobDelete(resp http.ResponseWriter, req *http.Request) {
 	}
 
 	// 删除的任务名、节点
-	job_name = req.PostForm.Get("job_name")
+	job_etcd_name = req.PostForm.Get("job_etcd_name")
 	node = req.PostForm.Get("node")
 
 	// 去删除任务
-	if oldJob, err = G_jobMgr.DeleteJob(job_name, node); err != nil {
+	if oldJob, err = G_jobMgr.DeleteJob(job_etcd_name, node); err != nil {
 		goto ERR
 	}
 

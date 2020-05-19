@@ -6,10 +6,12 @@ import (
 	"go-crontab/worker"
 	"runtime"
 	"time"
+	"github.com/ichunt2019/logger"
 )
 
 var (
 	confFile string // 配置文件路径
+	logDir string // 日志文件路径
 )
 
 // 解析命令行参数
@@ -17,6 +19,7 @@ func initArgs() {
 	// worker -config ./worker.json
 	// worker -h
 	flag.StringVar(&confFile, "config", "./worker.json", "worker.json")
+	flag.StringVar(&logDir, "logDir", "./logs", "日志文件目录")
 	flag.Parse()
 }
 
@@ -32,6 +35,15 @@ func main() {
 
 	// 初始化命令行参数
 	initArgs()
+
+	logConfig := make(map[string]string)
+	logConfig["log_path"] = logDir
+	logConfig["log_chan_size"] = "2"
+	logger.InitLogger("file",logConfig)
+	logger.Init()
+	logger.Info("ceshi")
+
+
 
 	// 初始化线程
 	initEnv()

@@ -1,3 +1,5 @@
 /worker/main/worker.json
 /cmd/*
 /go.sum
+/logs/*
+/log/*

@@ -2,7 +2,9 @@ package worker
 
 import (
 	"context"
+	"fmt"
 	"github.com/coreos/etcd/clientv3"
+	"github.com/ichunt2019/logger"
 	"go-crontab/common"
 	"net"
 	"time"
@@ -82,6 +84,7 @@ func (register *Register) keepOnline() {
 
 		// 注册到etcd
 		if _, err = register.kv.Put(cancelCtx, regKey, "", clientv3.WithLease(leaseGrantResp.ID)); err != nil {
+			logger.Error(fmt.Sprintf(" %s 服务注册失败:%s",regKey,err))
 			goto RETRY
 		}
 

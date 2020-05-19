@@ -67,6 +67,16 @@ func main(){
 	//}
 
 	//查询
+	getResp,err = kv.Get(context.TODO(),"/cron/workers",clientv3.WithPrefix())
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	for _, kvpair := range getResp.Kvs {
+		fmt.Println(kvpair)
+	}
+
+
 	getResp,err = kv.Get(context.TODO(),"/cron/jobs",clientv3.WithPrefix())
 	if err != nil {
 		fmt.Println(err)

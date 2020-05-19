@@ -1,9 +1,10 @@
 package worker
 
 import (
+	"fmt"
+	"github.com/ichunt2019/logger"
 	"go-crontab/common"
 	"time"
-	"fmt"
 )
 
 // 任务调度
@@ -75,6 +76,7 @@ func (scheduler *Scheduler) TryStartJob(jobPlan *common.JobSchedulePlan) {
 
 	// 执行任务
 	fmt.Println("执行任务:", jobExecuteInfo.Job.Name," 计划执行时间：", jobExecuteInfo.PlanTime.Format("2006-01-02 15:04:05")," 实际执行时间：", jobExecuteInfo.RealTime.Format("2006-01-02 15:04:05"))
+	logger.Info(fmt.Sprintf("执行普通任务:[%s],任务内容： [%s] , 计划执行时间：%s 实际执行时间：%s",jobExecuteInfo.Job.Name,jobExecuteInfo.Job.Command,jobExecuteInfo.PlanTime.Format("2006-01-02 15:04:05"),jobExecuteInfo.RealTime.Format("2006-01-02 15:04:05")))
 	G_executor.ExecuteJob(jobExecuteInfo)
 }
 
@@ -102,6 +104,7 @@ func (scheduler *Scheduler) TryStartOnceJob(job *common.Job) {
 
 	// 执行任务
 	fmt.Println("执行一次性任务:", jobExecuteInfo.Job.Name," 计划执行时间：", jobExecuteInfo.PlanTime.Format("2006-01-02 15:04:05")," 实际执行时间：", jobExecuteInfo.RealTime.Format("2006-01-02 15:04:05"))
+	logger.Info(fmt.Sprintf("执行一次性任务:[%s],任务内容： [%s] , 计划执行时间：%s 实际执行时间：%s",jobExecuteInfo.Job.Name,jobExecuteInfo.Job.Command,jobExecuteInfo.PlanTime.Format("2006-01-02 15:04:05"),jobExecuteInfo.RealTime.Format("2006-01-02 15:04:05")))
 	G_executor.ExecuteJob(jobExecuteInfo)
 }
 

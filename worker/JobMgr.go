@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/coreos/etcd/clientv3"
 	"github.com/coreos/etcd/mvcc/mvccpb"
+	"github.com/ichunt2019/logger"
 	"go-crontab/common"
 	"time"
 )
@@ -77,6 +78,7 @@ func (jobMgr *JobMgr) watchJobs() (err error) {
 			for _, watchEvent = range watchResp.Events {
 				switch watchEvent.Type {
 				case mvccpb.PUT: // 任务保存事件 新增或者修改
+					logger.Info(fmt.Sprintf("添加或者修改任务 %+v",watchEvent.Kv))
 					//反序列化job 推送一个更新事件给scheduler
 					if job, err = common.UnpackJob(watchEvent.Kv.Value); err != nil {
 						continue
@@ -85,6 +87,7 @@ func (jobMgr *JobMgr) watchJobs() (err error) {
 					// 构建一个更新Event
 					jobEvent = common.BuildJobEvent(common.JOB_EVENT_SAVE, job)
 				case mvccpb.DELETE: // 任务被删除了
+					logger.Info(fmt.Sprintf("删除任务 %+v",watchEvent.Kv))
 					//推送一个删除事件给scheduler
 					// Delete /cron/jobs/job10
 					jobName = common.ExtractJobName(string(watchEvent.Kv.Key))
@@ -132,6 +135,7 @@ func(jobMgr *JobMgr) watchOnceJobs(){
 			for _, watchEvent = range watchResp.Events {
 				switch watchEvent.Type {
 				case mvccpb.PUT: // 新增或者修改任务
+					logger.Info(fmt.Sprintf("添加或者修改任务 %+v",watchEvent.Kv))
 					//反序列化job 推送一个更新事件给scheduler
 					if job, err = common.UnpackJob(watchEvent.Kv.Value); err != nil {
 						continue
@@ -178,6 +182,7 @@ func (jobMgr *JobMgr) watchKiller() {
 			for _, watchEvent = range watchResp.Events {
 				switch watchEvent.Type {
 				case mvccpb.PUT: // 杀死任务事件
+					logger.Info(fmt.Sprintf("强杀任务 %+v",watchEvent.Kv))
 					jobName = common.ExtractKillerName(string(watchEvent.Kv.Key))
 					fmt.Println("监听到了强杀任务")
 					fmt.Println(jobName)
