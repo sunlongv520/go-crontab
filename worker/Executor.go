@@ -1,9 +1,11 @@
 package worker
 
 import (
+	"errors"
 	"go-crontab/common"
 	"math/rand"
 	"os/exec"
+	"strings"
 	"time"
 )
 
@@ -46,25 +48,30 @@ func (executor *Executor) ExecuteJob(info *common.JobExecuteInfo) {
 
 		err = jobLock.TryLock()
 		defer jobLock.Unlock()
-
 		if err != nil { // 上锁失败
 			result.Err = err
 			result.EndTime = time.Now()
 		} else {
 			// 上锁成功后，重置任务启动时间
 			result.StartTime = time.Now()
+			if ok :=strings.HasSuffix(info.Job.Command, ".sh");!ok{
+				result.EndTime = time.Now()
+				result.Output = []byte("该命令不是以.sh结尾的文件，无法执行")
+				result.Err = errors.New("该命令不是以.sh结尾的文件，无法执行")
+			}else{
+				// 执行shell命令
+				cmd = exec.CommandContext(info.CancelCtx, G_config.ExecCommand, "-c", info.Job.Command)
+				//cmd = exec.CommandContext(info.CancelCtx, "C:\\cygwin64\\bin\\bash.exe", "-c", info.Job.Command)
 
-			// 执行shell命令
-			cmd = exec.CommandContext(info.CancelCtx, G_config.ExecCommand, "-c", info.Job.Command)
-			//cmd = exec.CommandContext(info.CancelCtx, "C:\\cygwin64\\bin\\bash.exe", "-c", info.Job.Command)
+				// 执行并捕获输出
+				output, err = cmd.CombinedOutput()
+				// 记录任务结束时间
+				result.EndTime = time.Now()
+				result.Output = output
+				result.Err = err
+			}
 
-			// 执行并捕获输出
-			output, err = cmd.CombinedOutput()
 
-			// 记录任务结束时间
-			result.EndTime = time.Now()
-			result.Output = output
-			result.Err = err
 		}
 		// 任务执行完成后，把执行的结果返回给Scheduler，Scheduler会从executingTable中删除掉执行记录
 		G_scheduler.PushJobResult(result)

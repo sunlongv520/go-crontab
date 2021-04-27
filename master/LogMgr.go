@@ -24,7 +24,8 @@ func InitLogMgr() (err error) {
 
 	// 建立mongodb连接
 	// 建立mongodb连接
-	clientOptions := options.Client().ApplyURI("mongodb://ichunt:huntmon6699@192.168.1.237:27017/ichunt?authMechanism=SCRAM-SHA-1")
+
+	clientOptions := options.Client().ApplyURI(G_config.MongodbUri)
 	if client, err = mongo.Connect(
 		context.TODO(),clientOptions); err != nil {
 		return
@@ -32,7 +33,7 @@ func InitLogMgr() (err error) {
 
 	G_logMgr = &LogMgr{
 		client: client,
-		logCollection: client.Database("cron").Collection("log"),
+		logCollection: client.Database(G_config.MondbDatabases).Collection("log"),
 	}
 	return
 }

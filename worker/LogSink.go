@@ -1,9 +1,10 @@
 package worker
 
 import (
-	"go.mongodb.org/mongo-driver/mongo"
-	"go-crontab/common"
 	"context"
+	"github.com/ichunt2019/logger"
+	"go-crontab/common"
+	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"time"
 )
@@ -23,7 +24,7 @@ var (
 
 // 批量写入日志
 func (logSink *LogSink) saveLogs(batch *common.LogBatch) {
-	logSink.logCollection.InsertMany(context.TODO(), batch.Logs)
+	 logSink.logCollection.InsertMany(context.TODO(), batch.Logs)
 }
 
 // 日志存储协程
@@ -85,13 +86,14 @@ func InitLogSink() (err error) {
 	clientOptions := options.Client().ApplyURI(G_config.MongodbUri)
 	if client, err = mongo.Connect(
 		context.TODO(),clientOptions); err != nil {
+		logger.Error("mongodb数据库连接失败:%s",err)
 		return
 	}
 
 	//   选择db和collection
 	G_logSink = &LogSink{
 		client: client,
-		logCollection: client.Database("ichunt").Collection("cron_log"),
+		logCollection: client.Database(G_config.MondbDatabases).Collection("cron_log"),
 		logChan: make(chan *common.JobLog, 1000),
 		autoCommitChan: make(chan *common.LogBatch, 1000),
 	}

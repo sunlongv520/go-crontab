@@ -2,7 +2,7 @@
 
  主要负责接收后台对任务的管理 提供api接口
  
-  go run .\master\main\master.go  -config= .\master\main\master.json
+  go run .\master\main\master.go  -config=.\master\main\master.json
  
  
  

@@ -21,5 +21,13 @@
   "mongodbUri":  "mongodb://ichunt:huntmon6699@192.168.1.237:27017/ichunt?authMechanism=SCRAM-SHA-1",
 
   "mongodb连接超时时间": "单位毫秒",
-  "mongodbConnectTimeout": 5000
+  "mongodbConnectTimeout": 5000,
+
+
+
+  "etcdUserName":"root",
+
+  "etcdPasswd":"huntmon66499",
+
+  "mongodbDatabases": "ichunt"
 }

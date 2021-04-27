@@ -12,8 +12,11 @@ type Config struct {
 	MongodbUri string `json:"mongodbUri"`
 	MongodbConnectTimeout int `json:"mongodbConnectTimeout"`
 	JobLogBatchSize int `json:"jobLogBatchSize"`
-	JobLogCommitTimeout int `json"jobLogCommitTimeout"`
-	ExecCommand string `json"execCommand"`
+	JobLogCommitTimeout int `json:"jobLogCommitTimeout"`
+	ExecCommand string `json:"execCommand"`
+	EtcdUserName string `json:"etcdUserName"`
+	EtcdPasswd string `json:"etcdPasswd"`
+	MondbDatabases string `json:"mongodbDatabases"`
 }
 
 var (

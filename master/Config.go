@@ -15,6 +15,9 @@ type Config struct {
 	WebRoot string `json:"webroot"`
 	MongodbUri string `json:"mongodbUri"`
 	MongodbConnectTimeout int `json:"mongodbConnectTimeout"`
+	EtcdUserName string `json:"etcdUserName"`
+	EtcdPasswd string `json:"etcdPasswd"`
+	MondbDatabases string `json:"mongodbDatabases"`
 }
 
 var (

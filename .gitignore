@@ -3,3 +3,6 @@
 /go.sum
 /logs/*
 /log/*
+/master/main/master.json
+/worker/main/worker.json
+/.idea

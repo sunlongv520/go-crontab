@@ -56,6 +56,8 @@ func InitWorkerMgr() (err error) {
 	config = clientv3.Config{
 		Endpoints: G_config.EtcdEndpoints, // 集群地址
 		DialTimeout: time.Duration(G_config.EtcdDialTimeout) * time.Millisecond, // 连接超时
+		Username:G_config.EtcdUserName,
+		Password:G_config.EtcdPasswd,
 	}
 
 	// 建立连接

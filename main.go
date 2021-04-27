@@ -33,7 +33,7 @@ func main(){
 
 	//删除key
 
-	//kv.Delete(context.TODO(),"/cron/jobs/192.168.2.246/job1",clientv3.WithPrefix())
+	//kv.Delete(context.TODO(),"/cron/oncejobs/192.168.2.251/a6ef861b6e298f503310b979990f3ecc",clientv3.WithPrefix())
 	//kv.Delete(context.TODO(),"/cron/jobs",clientv3.WithPrefix())
 	//kv.Delete(context.TODO(),"/cron/oncejobs",clientv3.WithPrefix())
 	//

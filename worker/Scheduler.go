@@ -75,7 +75,7 @@ func (scheduler *Scheduler) TryStartJob(jobPlan *common.JobSchedulePlan) {
 	scheduler.jobExecutingTable[jobPlan.Job.Name] = jobExecuteInfo
 
 	// 执行任务
-	fmt.Println("执行任务:", jobExecuteInfo.Job.Name," 计划执行时间：", jobExecuteInfo.PlanTime.Format("2006-01-02 15:04:05")," 实际执行时间：", jobExecuteInfo.RealTime.Format("2006-01-02 15:04:05"))
+	fmt.Println("执行任务:", jobExecuteInfo.Job.Name,jobExecuteInfo.Job.JobEtcdName," 计划执行时间：","任务命令:",jobExecuteInfo.Job.Command, jobExecuteInfo.PlanTime.Format("2006-01-02 15:04:05")," 实际执行时间：", jobExecuteInfo.RealTime.Format("2006-01-02 15:04:05"))
 	logger.Info(fmt.Sprintf("执行普通任务:[%s],任务内容： [%s] , 计划执行时间：%s 实际执行时间：%s",jobExecuteInfo.Job.Name,jobExecuteInfo.Job.Command,jobExecuteInfo.PlanTime.Format("2006-01-02 15:04:05"),jobExecuteInfo.RealTime.Format("2006-01-02 15:04:05")))
 	G_executor.ExecuteJob(jobExecuteInfo)
 }
